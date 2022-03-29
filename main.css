@@ -1,5 +1,54 @@
 * {
+  box-sizing: border-box;
+}
+
+html, body {
   margin: 0;
   padding: 0;
+  border: 0 none;
   box-sizing: border-box;
+}
+
+main {
+  border: 25px solid black;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@keyframes piscadela {
+  50% {
+    background-color: white;
+  }
+}
+
+main > div {
+  border: 5px solid black;
+  width: 50%;
+  flex: none;
+  transition: .3s;
+}
+
+
+main > div:nth-child(1) {
+  background-color: blue;
+}
+
+main > div:nth-child(2) {
+  background-color: red;
+}
+
+main > div:nth-child(3) {
+  background-color: green;
+}
+
+main > div:nth-child(4) {
+  background-color: yellow;
+}
+
+main > div.animate {
+  animation: piscadela 1s ease-in-out;
+  /* animation-name: piscadela;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out; */
 }
