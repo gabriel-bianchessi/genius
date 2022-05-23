@@ -15,6 +15,7 @@ body {
 main {
   height: 80vh;
   width: 80vh;
+  border-radius: 50%;
   display: flex;
   flex-wrap: wrap;
   margin: 10vh auto;
@@ -26,6 +27,48 @@ main {
   }
 }
 
+.snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+.snackbar.animate {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {left: 0; opacity: 0;} 
+  to {left: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {left: 0; opacity: 0;}
+  to {left: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {left: 30px; opacity: 1;} 
+  to {left: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {left: 30px; opacity: 1;}
+  to {left: 0; opacity: 0;}
+}
+
 main > div {
   border: 5px solid black;
   width: 50%;
@@ -35,18 +78,22 @@ main > div {
 
 main > div:nth-child(1) {
   background-color: blue;
+  border-radius: 100% 0 0 0;
 }
 
 main > div:nth-child(2) {
   background-color: red;
+  border-radius: 0 100% 0 0;
 }
 
 main > div:nth-child(3) {
   background-color: green;
+  border-radius: 0 0 0 100% ;
 }
 
 main > div:nth-child(4) {
   background-color: yellow;
+  border-radius: 0 0 100% 0;
 }
 
 main > div.animate {
@@ -61,6 +108,7 @@ div.pontuacao {
   padding: 5vmin;
   background-color: #000000;
   color: #ffffff;
+  font-family: 'Montsserat', sans-serif;  
 }
 
 div.regressive-count {
@@ -206,3 +254,4 @@ div.overlay.visible {
   align-items: center;
   justify-content: center;
 }
+

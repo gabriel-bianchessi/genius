@@ -1,4 +1,4 @@
-const inGamePontuacao = document.querySelector("div.pontuacao")
+const divPontuacao = document.querySelector("div.pontuacao")
 const divMain = document.querySelector("main")
 const divs = Array.from(divMain.querySelectorAll("div"))
 const overlayDiv = document.querySelector("div.overlay")
@@ -8,7 +8,7 @@ const overlayRecord = document.querySelector("h1.record")
 const newRecordDiv = document.querySelector(".new-record")
 const regressiveCounter = document.querySelector(".regressive-count")
 const number = regressiveCounter.querySelector(".number")
-let record = 0
+const snackbar = document.querySelector(".snackbar")
 
 let sequencia = []
 let animatingColors = false
@@ -28,7 +28,9 @@ divMain.addEventListener("click", (ev) => {
   }
 
   if (animatingColors) {
-    console.log("espere a animação terminar");
+    console.log("Entrou aqui")
+    showElement(snackbar)
+    setTimeout(hideElement(snackbar), 3000)
     return;
   }
   
@@ -72,20 +74,30 @@ function playRegressiveCount() {
   }, 1000);
 }
 
+const storage = window.localStorage
+
+let record = getRecord()
 function updateScore() {
   divPontuacao.innerHTML = sequencia.length
   overlayScore.innerHTML = sequencia.length
   
   if (sequencia.length > record) {
     updateRecord(sequencia.length)
+    showElement(newRecordDiv)
   }
 }
 
-function updateRecord(newRecord) {
-  record = newRecord
-  showElement(newRecordDiv)
+function getRecord() {
+  let record = !localStorage.getItem('_record') ? 0 : localStorage.getItem('_record')
   overlayRecord.innerHTML = record
+  return record
 }
+
+function updateRecord(newRecord) {
+  console.log("Fazendo update do record", newRecord)
+  localStorage.setItem('_record', `${newRecord}`)
+}
+
 
 function showElement(element) {
   element.classList.add("visible")
@@ -106,7 +118,7 @@ function playAnimationColors() {
     setTimeout(() => {
       divs[current].classList.add("animate");
       animatingColors = index < sequencia.length - 1;
-    }, 1000 * index);
+    }, 1001 * index);
   });
 }
 
