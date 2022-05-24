@@ -28,15 +28,16 @@ divMain.addEventListener("click", (ev) => {
   }
 
   if (animatingColors) {
-    console.log("Entrou aqui")
-    showElement(snackbar)
-    setTimeout(hideElement(snackbar), 3000)
+    console.log("Clicou durante animação")
+    notification()
     return;
   }
   
   const idxClickedElement = divs.indexOf(ev.target);
   
   if (idxClickedElement !== sequencia[currentColorPosition]) {
+    hideDivPontuacao()
+    getRecord()
     showElement(overlayDiv)
     return;
   }
@@ -81,6 +82,7 @@ function updateScore() {
   divPontuacao.innerHTML = sequencia.length
   overlayScore.innerHTML = sequencia.length
   
+  record = getRecord()
   if (sequencia.length > record) {
     updateRecord(sequencia.length)
     showElement(newRecordDiv)
@@ -88,7 +90,7 @@ function updateScore() {
 }
 
 function getRecord() {
-  let record = !localStorage.getItem('_record') ? 0 : localStorage.getItem('_record')
+  let record = !localStorage.getItem('_record') ? 0 : Number(localStorage.getItem('_record'))
   overlayRecord.innerHTML = record
   return record
 }
@@ -96,6 +98,32 @@ function getRecord() {
 function updateRecord(newRecord) {
   console.log("Fazendo update do record", newRecord)
   localStorage.setItem('_record', `${newRecord}`)
+}
+
+let notificationIsVisible = false
+let progress = snackbar.querySelector('.progress')
+function notification() {
+  let timer
+  if (!notificationIsVisible) {
+    snackbar.classList.remove('fadeOut')
+    snackbar.classList.add('fadeIn') 
+    runProgress()
+    timer = setTimeout(() => {
+      snackbar.classList.add('fadeOut')
+      snackbar.classList.remove('fadeIn')
+    }, 5000)
+  } else {
+    runProgress()
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      snackbar.classList.add('fadeOut')
+      snackbar.classList.remove('fadeIn')
+    }, 5000)
+  }
+}
+
+function runProgress() {
+  progress.classList.add('running')
 }
 
 
@@ -113,6 +141,17 @@ function hideElement(element) {
   }
 } 
 
+function showDivPontuacao() {
+  setTimeout(() => {
+    divPontuacao.classList.add('fadeIn')
+  }, 3000)
+}
+
+function hideDivPontuacao() {
+  divPontuacao.classList.add('fadeOut')
+  divPontuacao.classList.remove('fadeIn')
+}
+
 function playAnimationColors() {
   sequencia.forEach((current, index) => {
     setTimeout(() => {
@@ -124,6 +163,7 @@ function playAnimationColors() {
 
 function inicio() {
   hideElement(overlayDiv)
+  showDivPontuacao()
   overlayScore.innerHTML = 0
   sequencia = [];
   currentColorPosition = 0;
@@ -136,4 +176,4 @@ function turno() {
   const rnd = Math.round(Math.random() * 3);
   sequencia.push(rnd);
   playAnimationColors();
-}
+} 

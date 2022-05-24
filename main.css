@@ -10,15 +10,18 @@ body {
   padding: 0;
   border: 0 none;
   box-sizing: border-box;
+  background-color: #333333;
 }
 
 main {
   height: 80vh;
   width: 80vh;
   border-radius: 50%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   margin: 10vh auto;
+  background-color: rgba(17, 25, 40);
 }
 
 @keyframes piscadela {
@@ -27,73 +30,29 @@ main {
   }
 }
 
-.snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  margin-left: -125px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 2px;
-  padding: 16px;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 30px;
-  font-size: 17px;
-}
-
-.snackbar.animate {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-@-webkit-keyframes fadein {
-  from {left: 0; opacity: 0;} 
-  to {left: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
-  from {left: 0; opacity: 0;}
-  to {left: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
-  from {left: 30px; opacity: 1;} 
-  to {left: 0; opacity: 0;}
-}
-
-@keyframes fadeout {
-  from {left: 30px; opacity: 1;}
-  to {left: 0; opacity: 0;}
-}
-
 main > div {
-  border: 5px solid black;
-  width: 50%;
-  flex: none;
+  border: 8px solid rgba(17, 25, 40);
   transition: 0.3s;
 }
 
 main > div:nth-child(1) {
   background-color: blue;
-  border-radius: 100% 0 0 0;
+  border-radius: 100% 32px 32px 32px;
 }
 
 main > div:nth-child(2) {
   background-color: red;
-  border-radius: 0 100% 0 0;
+  border-radius: 32px 100% 32px 32px;
 }
 
 main > div:nth-child(3) {
   background-color: green;
-  border-radius: 0 0 0 100% ;
+  border-radius: 32px 32px 32px 100% ;
 }
 
 main > div:nth-child(4) {
   background-color: yellow;
-  border-radius: 0 0 100% 0;
+  border-radius:  32px 32px 100% 32px;
 }
 
 main > div.animate {
@@ -103,13 +62,132 @@ main > div.animate {
   animation-timing-function: ease-in-out; */
 }
 
-div.pontuacao {
-  position: absolute;
-  padding: 5vmin;
-  background-color: #000000;
-  color: #ffffff;
-  font-family: 'Montsserat', sans-serif;  
+@keyframes fadeInPontuacao {
+  from {
+    left: -150px;
+  }
+  to {
+    left: 30px;
+  }
 }
+
+@keyframes fadeOutPontuacao{
+  from {
+    left: 30px
+  }
+  to {
+    left: -150px
+  }
+}
+
+div.pontuacao {
+  height: 30px;
+  width:30px;
+
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  left: -150px;
+  
+  background-color: #464646;
+  color: #ffffff;
+  border-radius: 16px;
+
+  padding: 5vmin;
+  font-family: 'Montsserat', sans-serif;  
+  transition: .3s;
+}
+
+
+div.pontuacao.fadeIn {
+  animation: fadeInPontuacao .3s forwards;
+}
+
+div.pontuacao.fadeOut { 
+  animation: fadeOutPontuacao .3s forwards;
+}
+
+@keyframes progressBar {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes fadeInProgressBar {
+  from {
+    top: -300px;
+  }
+  to {
+    top: 50px;
+  }
+}
+
+@keyframes fadeFadeOutProgressBar {
+  from {
+    top: 50px;
+  }
+  to {
+    top: -300px
+  }
+}
+
+.snackbar {
+  min-width: 250px;
+  height: 50px;
+  top: -300px;
+
+  background-color: #454955;
+  color: #F3EFF5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  text-align: center;
+
+  position: absolute;
+  z-index: 1;
+  right: 30px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17px;
+}
+
+.snackbar.fadeIn {
+  animation: fadeInProgressBar .2s forwards;
+}
+
+.snackbar.fadeOut {
+  animation: fadeFadeOutProgressBar .2s forwards;
+}
+
+.snackbar>p{
+  margin: 0;
+  padding: 16px;
+}
+
+.snackbar>.progessBar {
+  width: 100%;
+  height: 3px;
+  flex: none;
+  position: absolute;
+  bottom: 0;  
+}
+
+.progress {
+  width: 100%;
+  height: 100%;
+  background-color: #F3EFF5;
+}
+
+.progress.running {
+  animation: progressBar 5s forwards;
+}
+
 
 div.regressive-count {
   height: 500px;
